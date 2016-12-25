@@ -5,5 +5,5 @@
   (->>
     x
     (tree-seq sequential? seq)
-    (filter (complement sequential?))
+    (remove sequential?)
     (remove nil?)))
