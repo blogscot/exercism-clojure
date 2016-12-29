@@ -3,4 +3,4 @@
 
 (defn square [x] (math/expt 2 (dec x)))
 (defn total [] 
-  (reduce + (for [x (range 1 65)] (square x))))
+  (reduce + (map square (range 1 65))))
