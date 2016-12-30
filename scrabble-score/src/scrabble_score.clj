@@ -10,7 +10,7 @@
                       "q" 10 "z" 10))
 
 (defn score-letter [letter]
-  (-> letter (lower-case) (scores)))
+  (-> letter lower-case scores))
 
 (defn score-word [word]
-  (->> word (seq) (map (comp score-letter str)) (apply +)))
+  (->> word (map score-letter) (apply +)))
