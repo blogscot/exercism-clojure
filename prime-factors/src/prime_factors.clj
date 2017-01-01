@@ -1,9 +1,8 @@
 (ns prime-factors)
 
 (defn of [num]
-  (loop [num num current 2 acc []]
+  (loop [num num div 2 acc []]
     (cond
-      (= num 1) []
-      (= 1 (/ num current)) (vec (conj acc current))
-      (zero? (rem num current)) (recur (quot num current) current (conj acc current))
-      :else (recur num (inc current) acc))))
+      (zero? (rem num div)) (recur (quot num div) div (conj acc div))
+      (< num 2) acc
+      :else (recur num (inc div) acc))))
