@@ -1,14 +1,8 @@
-(ns sieve
-  (require [clojure.set :refer [difference]]))
+(ns sieve)
 
 (defn sieve [n]
-  (let [upper-bound (-> n Math/sqrt Math/ceil int)
-        factors (range 2 upper-bound)
-        limit (inc n)]
-    (loop [factors factors acc (set (range 2 limit))]
-      (if (empty? factors)
-        (-> acc sort vec)
-        (let [head (first factors)
-              multiples (set (range head limit head))
-              primes (difference multiples (set [head]))]
-          (recur (rest factors) (difference acc primes)))))))
+  (loop [primes [] all-numbers (take (dec n) (iterate inc 2))]
+    (if (empty? all-numbers)
+      primes
+      (recur (conj primes (first all-numbers)) 
+             (remove #(zero? (mod % (first all-numbers))) all-numbers)))))
