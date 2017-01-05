@@ -19,21 +19,15 @@
    (->> n 
         digits 
         reverse 
-        (map-indexed (fn [a b] [a b])) 
+        (map-indexed vector) 
         (map #(let [h (first %) t (second %)] (process h t))) 
         (apply +)) 
    (rem 10)))
 
-
-(defn valid? [n] (-> n checksum (rem 10) zero?))
-
-(defn ^:private get-check-digit [digit n]
-  (let [check-digit (rem (- 10 digit) 10)]
-    (+ check-digit (* 10 n))))
+(defn valid? [n] (-> n checksum zero?))
 
 (defn add-check-digit [n]
-  (-> n
-      (* 10)
-      checksum
-      (rem 10)
-      (get-check-digit n)))
+  (letfn [(get-check-digit 
+            [digit n] 
+            (+ (- 10 digit) (* 10 n)))]
+    (-> n (* 10) checksum (get-check-digit n))))
